@@ -1,0 +1,23 @@
+--cpu Cortex-M3
+"testhc595\startup_stm32f103xb.o"
+"testhc595\main.o"
+"testhc595\stm32f1xx_it.o"
+"testhc595\stm32f1xx_hal_msp.o"
+"testhc595\stm32f1xx_hal_gpio_ex.o"
+"testhc595\stm32f1xx_hal_tim.o"
+"testhc595\stm32f1xx_hal_tim_ex.o"
+"testhc595\stm32f1xx_hal.o"
+"testhc595\stm32f1xx_hal_rcc.o"
+"testhc595\stm32f1xx_hal_rcc_ex.o"
+"testhc595\stm32f1xx_hal_gpio.o"
+"testhc595\stm32f1xx_hal_dma.o"
+"testhc595\stm32f1xx_hal_cortex.o"
+"testhc595\stm32f1xx_hal_pwr.o"
+"testhc595\stm32f1xx_hal_flash.o"
+"testhc595\stm32f1xx_hal_flash_ex.o"
+"testhc595\stm32f1xx_hal_exti.o"
+"testhc595\system_stm32f1xx.o"
+--strict --scatter "TestHC595\TestHC595.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "TestHC595.map" -o TestHC595\TestHC595.axf

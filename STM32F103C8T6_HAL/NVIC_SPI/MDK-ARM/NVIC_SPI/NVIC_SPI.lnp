@@ -1,0 +1,24 @@
+--cpu Cortex-M3
+"nvic_spi\startup_stm32f103xb.o"
+"nvic_spi\main.o"
+"nvic_spi\stm32f1xx_it.o"
+"nvic_spi\stm32f1xx_hal_msp.o"
+"nvic_spi\stm32f1xx_hal_gpio_ex.o"
+"nvic_spi\stm32f1xx_hal_spi.o"
+"nvic_spi\stm32f1xx_hal.o"
+"nvic_spi\stm32f1xx_hal_rcc.o"
+"nvic_spi\stm32f1xx_hal_rcc_ex.o"
+"nvic_spi\stm32f1xx_hal_gpio.o"
+"nvic_spi\stm32f1xx_hal_dma.o"
+"nvic_spi\stm32f1xx_hal_cortex.o"
+"nvic_spi\stm32f1xx_hal_pwr.o"
+"nvic_spi\stm32f1xx_hal_flash.o"
+"nvic_spi\stm32f1xx_hal_flash_ex.o"
+"nvic_spi\stm32f1xx_hal_exti.o"
+"nvic_spi\stm32f1xx_hal_tim.o"
+"nvic_spi\stm32f1xx_hal_tim_ex.o"
+"nvic_spi\system_stm32f1xx.o"
+--strict --scatter "NVIC_SPI\NVIC_SPI.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "NVIC_SPI.map" -o NVIC_SPI\NVIC_SPI.axf
