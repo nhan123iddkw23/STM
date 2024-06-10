@@ -1,0 +1,72 @@
+#include <stm32f10x.h>
+
+void gpioInit();
+void gpioInit(){
+	 RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
+	 GPIO_InitTypeDef gpio;
+	 gpio.GPIO_Mode = GPIO_Mode_IPU;
+	 gpio.GPIO_Pin = GPIO_Pin_11;
+	 gpio.GPIO_Speed = GPIO_Speed_50MHz;
+	
+	 gpio.GPIO_Mode = GPIO_Mode_AF_PP;
+	 gpio.GPIO_Pin = GPIO_Pin_12;
+	 gpio.GPIO_Speed = GPIO_Speed_50MHz;
+	 GPIO_Init(GPIOA,&gpio);
+}
+
+void canInit();
+void canInit() {
+	 RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1, ENABLE);
+	 CAN_InitTypeDef can;
+	 can.CAN_ABOM = DISABLE;
+	 can.CAN_AWUM = DISABLE;
+	 can.CAN_TTCM = DISABLE;
+	 can.CAN_NART = DISABLE;
+	 can.CAN_RFLM = DISABLE;
+	 can.CAN_TXFP = DISABLE;
+	 can.CAN_Mode = CAN_Mode_Normal;
+	
+	
+	 can.CAN_SJW = CAN_SJW_1tq;
+	 can.CAN_BS1 = CAN_BS1_3tq;
+	 can.CAN_BS2 = CAN_BS2_5tq;
+	 can.CAN_Prescaler = 4;
+	 CAN_Init(CAN1,&can);
+	 
+	 CAN_FilterInitTypeDef can_filter;
+	 can_filter.CAN_FilterNumber = 0;
+	 can_filter.CAN_FilterMode = CAN_FilterMode_IdMask;
+	 can_filter.CAN_FilterScale = CAN_FilterScale_32bit;
+	 can_filter.CAN_FilterIdHigh = 0x0000;
+	 can_filter.CAN_FilterIdLow = 0x0000;
+	 can_filter.CAN_FilterMaskIdHigh = 0x0000;
+	 can_filter.CAN_FilterMaskIdLow = 0x0000;
+	 can_filter.CAN_FilterFIFOAssignment = CAN_FIFO0;
+	 can_filter.CAN_FilterActivation = ENABLE;
+	 CAN_FilterInit(&can_filter);
+ }
+
+ void send_Can_message(uint32_t id, uint8_t *data, uint8_t strlen) {
+	 CanTxMsg TxMessage;
+	 TxMessage.DLC = strlen;
+	 TxMessage.StdId = id;
+   TxMessage.ExtId = 0x00;
+   TxMessage.IDE = CAN_ID_STD;
+   TxMessage.RTR = CAN_RTR_DATA;
+	 
+	 for(int i = 0; i < strlen; i++) {
+		 TxMessage.Data[i] = *(data+i);
+	 }
+	 CAN_Transmit(CAN1,&TxMessage);
+ }
+ 
+int main() {
+	 gpioInit();
+	 canInit();
+	 uint8_t data[8] = {1,7,0,6,2,0,0,3};
+	 while(1) {
+		 send_Can_message(0x123,data,8);
+	 }
+ }
+		 
+	 
